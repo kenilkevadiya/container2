@@ -9,6 +9,8 @@ app.use(express.json());
 const PORT = Number(process.env.PORT) || 6001;
 const FILE_DIR = process.env.FILE_DIRECTORY || "/kenil_PV_dir";
 
+// app2.js
+
 app.post('/calculate', (req, res) => {
     const { file, product } = req.body;
     const filePath = path.join(FILE_DIR, file);
@@ -45,6 +47,3 @@ app.post('/calculate', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Container 2 is listening on port ${PORT}`);
 });
-
-//testing
-//testing
