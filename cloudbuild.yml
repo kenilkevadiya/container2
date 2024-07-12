@@ -1,0 +1,40 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+steps:
+
+  # Step 1: Authenticating to GKE and retrieving cluster credentials
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud container clusters get-credentials cluster-k8s --zone us-central1-c --project kubernetes-assignment-429022
+        echo "Cluster credentials successfully obtained."
+
+  # Step 2: Building Docker image for container2
+  - name: "gcr.io/cloud-builders/docker"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        docker build -t us-central1-docker.pkg.dev/kubernetes-assignment-429022/k8s-repo/container2:latest .
+        echo "Docker image for container2 built successfully."
+
+  # Step 3: Pushing Docker image for container2 to Google Artifact Registry
+  - name: "gcr.io/cloud-builders/docker"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        docker push us-central1-docker.pkg.dev/kubernetes-assignment-429022/k8s-repo/container2:latest
+        echo "Docker image for container2 pushed successfully."
+
+  # Step 4: Updating GKE deployments with new Docker image
+  - name: "gcr.io/cloud-builders/kubectl"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        kubectl set image deployment/container2-deployment container2=us-central1-docker.pkg.dev/kubernetes-assignment-429022/k8s-repo/container2:latest
+        echo "GKE deployments updated with new Docker image."
