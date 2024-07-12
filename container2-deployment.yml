@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: container2-deployment
+  labels:
+    app: container2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: container2
+  template:
+    metadata:
+      labels:
+        app: container2
+    spec:
+      containers:
+      - name: container2
+        image: kenilkevadiya/kbcontainer2:vs
+        ports:
+        - containerPort: 6001
+        volumeMounts:
+        - name: data-volume
+          mountPath: /kenil_PV_dir
+        env:
+        - name: PORT
+          value: "6001"
+        - name: FILE_DIR
+          value: "/kenil_PV_dir"
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: k-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: k-pvc
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: container2-service
+spec:
+  selector:
+    app: container2
+  ports:
+    - protocol: TCP
+      port: 90
+      targetPort: 6001

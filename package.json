@@ -1,0 +1,16 @@
+{
+  "name": "container2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app2.js",
+  "scripts": {
+    "start": "node app2.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "csv-parser": "^2.3.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
