@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: container2
-        image: kenilkevadiya/kbcontainer2:vs
+        image: us-central1-docker.pkg.dev/kubernetes-assignment-429022/k8s-repo/container2:latest
         ports:
         - containerPort: 6001
         volumeMounts:

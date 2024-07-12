@@ -36,5 +36,6 @@ steps:
     args:
       - "-c"
       - |
-        kubectl set image deployment/container2-deployment container2=us-central1-docker.pkg.dev/kubernetes-assignment-429022/k8s-repo/container2:latest
+        kubectl get deployment container2-deployment || kebectl apply -f container2-deployment.yml
+        kubectl set image /container2-deployment container2=us-central1-docker.pkg.dev/kubernetes-assignment-429022/k8s-repo/container2:latest
         echo "GKE deployments updated with new Docker image."
