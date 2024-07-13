@@ -9,7 +9,7 @@ app.use(express.json());
 const PORT = Number(process.env.PORT) || 6001;
 const FILE_DIR = process.env.FILE_DIRECTORY || "/kenil_PV_dir";
 
-// container2
+// app2.js
 
 app.post('/calculate', (req, res) => {
     const { file, product } = req.body;
